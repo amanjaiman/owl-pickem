@@ -14,6 +14,6 @@ urlpatterns = [
     path('adminaction/', views.adminaction, name="adminaction"),
     path('leaderboard/', views.leaderboard, name="leaderboard"),
     path('<str:username>/history/', views.userhistory, name="userhistory"),
-    path('admin/importschedule', views.import_schedule, name="import_schedule"),
+    path('importschedule', views.import_schedule, name="import_schedule"),
     path('pastweeks/', views.pastweeks, name="pastweeks")
 ]

@@ -223,9 +223,7 @@ def give_points(game):
 
 def import_schedule(request):
     if request.user.is_superuser:
-
-        response = input("Are you sure you want to import the schedule? <Y/n> ")
-        if response != "Y":
+        if Game.objects.all().count() != 0:
             return HttpResponseRedirect(reverse('pickem:index', args=()))
 
         teams = {
