@@ -1,0 +1,23 @@
+{% extends "pickem/base.html" %}
+
+{% block content %}
+<div class="container-fluid position-relative" id="main-content" style="width:80%;">
+    <h1 class="text-center mb-3">Leaderboard</h1><br>
+    <div class="container col">
+        {% if users %}
+            <ul class="list-group">
+                {% for curr_user_profile in users %}
+                    {% if curr_user_profile.user.username != "admin" %}
+                    <a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="list-group-item {% if curr_user_profile == user_profile %} list-group-item-primary {% endif %} d-flex justify-content-between align-items-center">
+                        {{ curr_user_profile.user.username }}
+                        <span class="badge bg-primary rounded-pill">{{ curr_user_profile.points }}</span>
+                    </a>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Internal Error!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

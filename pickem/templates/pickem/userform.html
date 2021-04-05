@@ -1,0 +1,65 @@
+<form action="{% url 'pickem:makepredictions' %}" id="predictions" method="post">
+    {% csrf_token %}
+
+    {% if user_profile %}
+    <div class="row-md-3 text-center justify-content-center ">
+        {% if week_start %}
+        <button type="submit" class="btn btn-outline-dark btn-lg" value="makepredictions" disabled>Locked in!</button>
+        {% else %}
+        <button type="submit" class="btn btn-warning btn-lg" value="makepredictions">Lock in!</button>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="row-md-3 text-center justify-content-center ">
+        <p>Login before making predictions!</p>
+    </div>
+    {% endif %}
+    <br>
+
+    {% for prediction in user_predictions %}
+        <div class="row text-center justify-content-center">
+            {% for team in prediction.game.teams.all %}
+            <div class="col-md-3 btn-group btn-group-toggle">
+                {% if team == prediction.predicted_team %}
+                <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}" value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}" autocomplete="off" checked {% if week_start %}disabled{% endif %}>
+                {% else %}
+                <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}" value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}" autocomplete="off" {% if week_start %}disabled{% endif %}>
+                {% endif %}
+                <label class="btn {% if prediction.game.has_occurred and team.team_name == prediction.game.winning_team.team_name %} btn-outline-success {% else %} {% if prediction.game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}" for="{{ prediction.game.game_id }}-{{ team.team_name }}">
+                    {% if forloop.counter == 1 %}
+                    <span>
+                        <p>{{ team.team_name }} <img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="40">
+                        </p>
+                    </span>
+                    {% else %}
+                    <span>
+                        <p><img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="40"> {{ team.team_name }}
+                        </p>
+                    </span>
+                    {% endif %}
+                </label>
+            </div>
+            {% if forloop.counter == 1 %}
+            <div class="col-md-1">
+                <p>vs.</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <br>
+    {% endfor %}
+
+    {% if user_profile %}
+    <div class="row-md-3 text-center justify-content-center ">
+        {% if week_start %}
+        <button type="submit" class="btn btn-outline-dark btn-lg" value="makepredictions" disabled>Locked in!</button>
+        {% else %}
+        <button type="submit" class="btn btn-warning btn-lg" value="makepredictions">Lock in!</button>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="row-md-3 text-center justify-content-center ">
+        <p>Login before making predictions!</p>
+    </div>
+    {% endif %}
+</form>

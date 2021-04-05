@@ -1,0 +1,25 @@
+{% extends "pickem/base.html" %}
+
+{% block content %}
+<div class="container-fluid positive-relative" id="main-content">
+    <h1 class="text-center mb-3">Week {{ current_week }}</h1><br>
+    <div class="container">
+    {% if request.session.form_message %}<p class="text-center mb-3"><strong>{{ request.session.form_message }}</strong></p>{% endif %}
+
+    {% if user_profile and user_profile.user.is_superuser %}
+        {% include 'pickem/adminform.html' %}
+    {% else %}
+        {% if user_profile and user_profile.latest_pred_week == current_week %}
+            {% include 'pickem/userform.html' %}
+        {% else %}
+            {% if current_week_games %}
+                {% include 'pickem/indexform.html' %}
+            {% else %}
+                <p class="text-center mb-3">No games this week!</p>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    </div>
+
+</div>
+{% endblock %}

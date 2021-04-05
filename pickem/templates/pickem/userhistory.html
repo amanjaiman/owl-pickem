@@ -1,0 +1,50 @@
+{% extends "pickem/base.html" %}
+
+{% block content %}
+<div class="container-fluid" id="main-content">
+{% if user_profile and user_predictions %}
+    <h1 class="text-center mb-3">{{ user_profile.user.username }} <span class="badge bg-primary rounded-pill">{{ user_profile.points }}</span></h1><br>
+    <div class="container">
+        <div class="accordion" id="accordionHistory">
+            {% for week in user_predictions %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button {% if forloop.counter != user_profile.latest_pred_week %} collapsed {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}"
+                        aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                        Week {{ forloop.counter }}
+                    </button>
+                </h2>
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.counter == user_profile.latest_pred_week %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}"
+                    data-bs-parent="#accordionHistory">
+                    <div class="accordion-body">
+                        {% for prediction in week %}
+                            {% if prediction.predicted_team %}
+                            <div class="row text-center justify-content-center">
+                                <ul class="list-group list-group-horizontal">
+                                    {% for team in prediction.game.teams.all %}
+                                    <li class="list-group-item {% if prediction.game.has_occurred %} {% if team == prediction.predicted_team %} {% if prediction.correct %} list-group-item-success {% else %} list-group-item-danger {% endif %} {% endif %} {% else %} {% if team == prediction.predicted_team %}list-group-item-primary {% endif %} {% endif %}"
+                                        style="width:47.5%">
+                                        <span>
+                                            <img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="25">
+                                            <p>{{ team.team_name }}</p>
+                                        </span>
+                                    </li>
+                                    {% if forloop.counter == 1 %}
+                                    <li class="list-group-item" style="width:5%">@</li>
+                                    {% else %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endif %}
+</div>
+{% endblock %}
