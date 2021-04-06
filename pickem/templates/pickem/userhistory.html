@@ -2,8 +2,9 @@
 
 {% block content %}
 <div class="container-fluid" id="main-content">
-{% if profile and user_predictions %}
+{% if profile %}
     <h1 class="text-center mb-3">{{ profile.user.username }} <span class="badge bg-primary rounded-pill">{{ profile.points }}</span></h1><br>
+    {% if user_predictions %}
     <div class="container">
         <div class="accordion" id="accordionHistory">
             {% for week in user_predictions %}
@@ -44,6 +45,11 @@
             {% endfor %}
         </div>
     </div>
+    {% else %}
+    <div class="row-md-3 text-center justify-content-center ">
+        <p>No predictions yet!</p>
+    </div>
+    {% endif %}
     
 {% endif %}
 </div>
