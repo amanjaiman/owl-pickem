@@ -313,4 +313,6 @@ def add_teams(request):
 
             new_team = Team(team_name=team_name, team_logo=os.path.join(directory, (team+".png")))
 
+            new_team.save()
+
     return HttpResponseRedirect(reverse('pickem:index', args=()))
