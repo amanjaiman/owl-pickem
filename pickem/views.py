@@ -158,6 +158,7 @@ def logoutaction(request):
     logout(request)
     return HttpResponseRedirect(reverse('pickem:index', args=()))
 
+
 def makepredictions(request):
     game_ids = json.loads(request.session.get('games'))
 
@@ -221,6 +222,7 @@ def give_points(game):
             game_pred.save()
         user.save()
 
+
 def import_schedule(request):
     if request.user.is_superuser:
         if Game.objects.all().count() != 0:
@@ -273,5 +275,42 @@ def import_schedule(request):
                 g.save()
 
                 curr_game += 1
+
+    return HttpResponseRedirect(reverse('pickem:index', args=()))
+
+def add_teams(request):
+    if request.user.is_superuser:
+        if Team.objects.all().count() != 0:
+            return HttpResponseRedirect(reverse('pickem:index', args=()))
+        
+        teams = {
+            "outlaws": "Houston Outlaws",
+            "fuel": "Dallas Fuel",
+            "gladiators": "Los Angeles Gladiators",
+            "shock": "San Francisco Shock",
+            "charge": "Guangzhou Charge",
+            "dragons": "Shanghai Dragons",
+            "valiant": "Los Angeles Valiant",
+            "hunters": "Chengdu Hunters",
+            "fusion": "Philadelphia Fusion",
+            "dynasty": "Seoul Dynasty",
+            "defiant": "Toronto Defiant",
+            "titans": "Vancouver Titans",
+            "reign": "Atlanta Reign",
+            "mayhem": "Florida Mayhem",
+            "eternal": "Paris Eternal",
+            "spitfire": "London Spitfire",
+            "excelsior": "New York Excelsior",
+            "spark": "Hangzhou Spark",
+            "uprising": "Boston Uprising",
+            "justice": "Washington Justice"
+        }
+
+        directory = r'mysite\media\uploads'
+
+        for team in teams.keys():
+            team_name = teams[team]
+
+            new_team = Team(team_name=team_name, team_logo=os.path.join(directory, (team+".png")))
 
     return HttpResponseRedirect(reverse('pickem:index', args=()))

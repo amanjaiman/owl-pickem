@@ -15,5 +15,6 @@ urlpatterns = [
     path('leaderboard/', views.leaderboard, name="leaderboard"),
     path('<str:username>/history/', views.userhistory, name="userhistory"),
     path('importschedule', views.import_schedule, name="import_schedule"),
-    path('pastweeks/', views.pastweeks, name="pastweeks")
+    path('pastweeks/', views.pastweeks, name="pastweeks"),
+    path('addteams/', views.add_teams, name="add_teams")
 ]
