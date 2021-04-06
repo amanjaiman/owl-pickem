@@ -75,10 +75,16 @@ def userhistory(request, username):
         week = user.prediction_set.filter(game__week=i)
         pred_list.append(week)
 
+    if request.user.is_authenticated:
+        auth_user = request.user
+        user_profile = UserProfile.objects.get(user=auth_user)
+    else:
+        user_profile = None
 
     context = {
-        'user_profile': user,
-        'user_predictions': pred_list
+        'profile': user,
+        'user_predictions': pred_list,
+        'user_profile': user_profile
     }
 
     return render(request, 'pickem/userhistory.html', context)

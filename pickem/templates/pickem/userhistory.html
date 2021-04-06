@@ -2,19 +2,19 @@
 
 {% block content %}
 <div class="container-fluid" id="main-content">
-{% if user_profile and user_predictions %}
-    <h1 class="text-center mb-3">{{ user_profile.user.username }} <span class="badge bg-primary rounded-pill">{{ user_profile.points }}</span></h1><br>
+{% if profile and user_predictions %}
+    <h1 class="text-center mb-3">{{ profile.user.username }} <span class="badge bg-primary rounded-pill">{{ profile.points }}</span></h1><br>
     <div class="container">
         <div class="accordion" id="accordionHistory">
             {% for week in user_predictions %}
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-                    <button class="accordion-button {% if forloop.counter != user_profile.latest_pred_week %} collapsed {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}"
+                    <button class="accordion-button {% if forloop.counter != profile.latest_pred_week %} collapsed {% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}"
                         aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
                         Week {{ forloop.counter }}
                     </button>
                 </h2>
-                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.counter == user_profile.latest_pred_week %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}"
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.counter == profile.latest_pred_week %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}"
                     data-bs-parent="#accordionHistory">
                     <div class="accordion-body">
                         {% for prediction in week %}
