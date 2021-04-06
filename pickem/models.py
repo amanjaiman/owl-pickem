@@ -3,7 +3,7 @@ from django.db import models
 
 class Team(models.Model):
     team_name = models.CharField(max_length=50)
-    team_logo = models.ImageField(upload_to='uploads/')
+    team_logo = models.CharField(max_length=100)
     team_wins = models.IntegerField(default=0)
     team_losses = models.IntegerField(default=0)
 

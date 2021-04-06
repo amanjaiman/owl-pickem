@@ -306,12 +306,12 @@ def add_teams(request):
             "justice": "Washington Justice"
         }
 
-        directory = r'\uploads'
+        url_path = 'https://owlpickem.s3.us-east-2.amazonaws.com/'
 
         for team in teams.keys():
             team_name = teams[team]
 
-            new_team = Team(team_name=team_name, team_logo=os.path.join(directory, (team+".png")))
+            new_team = Team(team_name=team_name, team_logo=url_path+team+".png")
 
             new_team.save()
 

@@ -22,12 +22,12 @@
             <label class="btn btn-outline-dark" for="{{ game.game_id }}-{{ team.team_name }}">
                 {% if forloop.counter == 1 %}
                 <span>
-                    <p>{{ team.team_name }} <img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="45">
+                    <p>{{ team.team_name }} <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45">
                     </p>
                 </span>
                 {% else %}
                 <span>
-                    <p><img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="45"> {{ team.team_name }}
+                    <p><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45"> {{ team.team_name }}
                     </p>
                 </span>
                 {% endif %}

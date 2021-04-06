@@ -29,12 +29,12 @@
             <label class="btn {% if game.has_occurred and team.team_name == game.winning_team.team_name %} btn-outline-success {% else %} {% if game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}" for="{{ game.game_id }}-{{ team.team_name }}">
                 {% if forloop.counter == 1 %}
                 <span>
-                    <p>{{ team.team_name }} <img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="40">
+                    <p>{{ team.team_name }} <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">
                     </p>
                 </span>
                 {% else %}
                 <span>
-                    <p><img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="40"> {{ team.team_name }}
+                    <p><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40"> {{ team.team_name }}
                     </p>
                 </span>
                 {% endif %}

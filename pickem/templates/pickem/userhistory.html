@@ -25,7 +25,7 @@
                                     <li class="list-group-item {% if prediction.game.has_occurred %} {% if team == prediction.predicted_team %} {% if prediction.correct %} list-group-item-success {% else %} list-group-item-danger {% endif %} {% endif %} {% else %} {% if team == prediction.predicted_team %}list-group-item-primary {% endif %} {% endif %}"
                                         style="width:47.5%">
                                         <span>
-                                            <img src="{{ team.team_logo.url }}" alt="{{ team.team_name }}" height="25">
+                                            <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="25">
                                             <p>{{ team.team_name }}</p>
                                         </span>
                                     </li>
