@@ -306,7 +306,7 @@ def add_teams(request):
             "justice": "Washington Justice"
         }
 
-        directory = r'mysite\media\uploads'
+        directory = r'\uploads'
 
         for team in teams.keys():
             team_name = teams[team]
