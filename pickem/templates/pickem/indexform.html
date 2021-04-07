@@ -39,9 +39,9 @@
                         class="btn {% if game.has_occurred and team.team_name == game.winning_team.team_name %} btn-outline-success {% else %} {% if game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}"
                         for="{{ game.game_id }}-{{ team.team_name }}">
                         {% if forloop.counter == 1 %}
-                        <span>{% if agent and agent == "web" %}{{ team.team_name }} {% endif %}<img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40"></span>
+                        <span>{% if agent and agent == "web" %}{{ team.team_name }} {% endif %}<img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45"></span>
                         {% else %}
-                        <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
+                        <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
                         {% endif %}
                     </label>
                 </div>

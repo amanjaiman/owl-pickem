@@ -3,7 +3,11 @@
 {% block content %}
 <div class="container-fluid" id="main-content">
 {% if profile %}
-    <h1 class="text-center mb-3">{{ profile.user.username }} <span class="badge bg-primary rounded-pill">{{ profile.points }}</span></h1><br>
+    <div>
+        <h1 class="text-center mb-3">{{ profile.user.username }}</h1>
+        <h3 class="text-center mb-3"><span class="badge bg-primary rounded-pill">points: {{ profile.points }}</span></h3>
+    </div>
+    <br>
     {% if user_predictions %}
     <div class="container">
         <div class="accordion" id="accordionHistory">
@@ -23,17 +27,12 @@
                             <div class="row text-center justify-content-center">
                                 <ul class="list-group list-group-horizontal">
                                     {% for team in prediction.game.teams.all %}
-                                    <li class="list-group-item {% if prediction.game.has_occurred %} {% if team == prediction.predicted_team %} {% if prediction.correct %} list-group-item-success {% else %} list-group-item-danger {% endif %} {% endif %} {% else %} {% if team == prediction.predicted_team %}list-group-item-primary {% endif %} {% endif %}"
-                                        style="width:47.5%">
+                                    <li class="list-group-item {% if prediction.game.has_occurred %} {% if team == prediction.predicted_team %} {% if prediction.correct %} list-group-item-success {% else %} list-group-item-danger {% endif %} {% endif %} {% else %} {% if team == prediction.predicted_team %}list-group-item-primary {% endif %} {% endif %}" style="width:50%;">
                                         <span>
-                                            <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="25">
+                                            <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="30">
                                             <p>{{ team.team_name }}</p>
                                         </span>
                                     </li>
-                                    {% if forloop.counter == 1 %}
-                                    <li class="list-group-item" style="width:5%">@</li>
-                                    {% else %}
-                                    {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>

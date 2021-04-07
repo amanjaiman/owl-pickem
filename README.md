@@ -10,12 +10,16 @@
   - [x] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
   - [x] Add feedback (message, push, etc.) when locking picks
+  - [ ] Fade alerts
   - [x] Center button text
 
   - [x] Add headers for days for the games
   - [ ] Add more fields to leaderboard (twitter handle, total percentage, games predicted)
   - [ ] Change color for incorrect predictions (currently black, try some shade of red)
   - [ ] Add color of badge based on rank if in top 3
+  - [x] User profile needs to look normal when small screen
+  - [ ] When games are locked, display percentage of each team picked
+  - [ ] Display percentage in past weeks too
 
   - [ ] Pagination for leaderboard
   - [x] Make it possible to enter username or email for logging in

@@ -38,9 +38,9 @@
                     for="{{ game.game_id }}-{{ team.team_name }}">
                     {% if forloop.counter == 1 %}
                     <span>{% if agent and agent == "web" %}{{ team.team_name }} {% endif %}<img src="{{ team.team_logo }}"
-                    alt="{{ team.team_name }}" height="40"></span>
+                    alt="{{ team.team_name }}" height="45"></span>
                     {% else %}
-                    <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
+                    <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
                     {% endif %}
                 </label>
             </div>
