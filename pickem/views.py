@@ -29,7 +29,7 @@ def index(request):
     if request.user.is_authenticated:
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
-        user_predictions = user_profile.prediction_set.filter(game__week=current_week)
+        user_predictions = user_profile.prediction_set.filter(game__week=current_week).order_by('game__game_number')
     else:
         user_profile = None
         user_predictions = None
@@ -72,7 +72,7 @@ def userhistory(request, username):
     pred_list = []
 
     for i in range(1, user_week+1):
-        week = user.prediction_set.filter(game__week=i)
+        week = user.prediction_set.filter(game__week=i).order_by('game__game_number')
         pred_list.append(week)
 
     if request.user.is_authenticated:

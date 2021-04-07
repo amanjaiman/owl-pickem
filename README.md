@@ -3,8 +3,7 @@
  ## Todo
   ### Bugs
   - [x] When you aren't logged in and you click on a profile, it shows that you are logged in as them
-  - [ ] Seemingly random reordering of games after locking picks
-        **Solution: always order_by datetime**
+  - [x] Seemingly random reordering of games after locking picks
   ### Features
   - [ ] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
@@ -20,4 +19,5 @@
   - [ ] Pagination for leaderboard
   - [ ] Make it possible to enter username or email for logging in
 
+  - [ ] Custom 404 page
   - [ ] Add admin feature to change week from app
