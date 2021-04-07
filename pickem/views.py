@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -47,6 +49,10 @@ def index(request):
     if login_message:
         request.session['login_message'] = False
 
+    prediction_message = request.session.get('prediction_message')
+    if prediction_message:
+        request.session['prediction_message'] = False
+
     context = {
         'current_week' : current_week,
         'current_week_games': current_week_games,
@@ -54,6 +60,7 @@ def index(request):
         'user_predictions': user_predictions,
         'week_start': week_start,
         'login_message': login_message,
+        'prediction_message': prediction_message,
         'agent': agent
     }
     return render(request, 'pickem/index.html', context)
@@ -142,6 +149,7 @@ def signupaction(request):
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
+        #confirm_password = request.POST['confirm_password']
     except KeyError:
         return render(request, 'pickem/signup.html', {'error_message': "Not all required fields were provided."})
     else:
@@ -152,6 +160,7 @@ def signupaction(request):
         if not username.isalnum():
             return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!"})
         else:
+
             user = User.objects.create_user(username=username, password=password, email=email)
             new_user = UserProfile(user=user)
             new_user.save()
@@ -172,15 +181,28 @@ def loginaction(request):
         return render(request, 'pickem/login.html', {'error_message': "Not all required fields were provided."})
     else:
         if not username.isalnum():
-            return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!"})
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            request.session['login_message'] = True
-            return HttpResponseRedirect(reverse('pickem:index', args=()))
+            if '@' in username:
+                try:
+                    validate_email(username)
+                except ValidationError:
+                    return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!"})
+                else:
+                    u = User.objects.get(email=username)
+                    user = authenticate(request, username=u.username, password=password)
+                    if user is not None:
+                        login(request, user)
+                        request.session['login_message'] = True
+                        return HttpResponseRedirect(reverse('pickem:index', args=()))
+                    else:
+                        return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})
         else:
-            return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                request.session['login_message'] = True
+                return HttpResponseRedirect(reverse('pickem:index', args=()))
+            else:
+                return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})
 
 def logoutaction(request):
     logout(request)
@@ -194,10 +216,9 @@ def makepredictions(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
     if len(predicted_teams) > 1:
+        request.session['prediction_message'] = True
         user_profile.latest_pred_week = current_week
         user_profile.save()
-
-    print(predicted_teams)
 
     for game_id in game_ids:
         if game_id in predicted_teams:

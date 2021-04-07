@@ -7,9 +7,9 @@
   ### Features
   - [x] SSL
   - [x] Add feedback when logged in
-  - [ ] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
+  - [x] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
-  - [ ] Add feedback (message, push, etc.) when locking picks
+  - [x] Add feedback (message, push, etc.) when locking picks
   - [ ] Center button text
   - [ ] Option to not predict a game (unselect an option)
 
@@ -19,7 +19,7 @@
   - [ ] Add color of badge based on rank if in top 3
 
   - [ ] Pagination for leaderboard
-  - [ ] Make it possible to enter username or email for logging in
+  - [x] Make it possible to enter username or email for logging in
 
   - [ ] Custom 404 page
   - [ ] Add admin feature to change week from app
