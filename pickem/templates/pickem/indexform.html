@@ -17,7 +17,7 @@
     <br>
 
     {% for game in current_week_games %}
-    <div class="row text-center justify-content-center">
+    <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
         {% for team in game.teams.all %}
         <div class="col-md-3 btn-group btn-group-toggle">
             {% if game.has_occurred %}
@@ -46,8 +46,14 @@
         </div>
         {% endif %}
         {% endfor %}
+        {% if agent and agent == "mobile" %}
+        <div class="d-flex flex-wrap align-items-center justify-content-center py-2"
+            style="width:50%; border-bottom: 1px solid gray;"></div>
+        {% else %}
+        <br>
+        {% endif %}
     </div>
-    <br>
+    
     {% endfor %}
 
     {% if user_profile %}

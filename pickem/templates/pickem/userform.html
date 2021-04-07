@@ -17,7 +17,7 @@
     <br>
 
     {% for prediction in user_predictions %}
-        <div class="row text-center justify-content-center">
+        <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
             {% for team in prediction.game.teams.all %}
             <div class="col-md-3 btn-group btn-group-toggle">
                 {% if team == prediction.predicted_team %}
@@ -45,8 +45,14 @@
             </div>
             {% endif %}
             {% endfor %}
+            {% if agent and agent == "mobile" %}
+            <div class="d-flex flex-wrap align-items-center justify-content-center py-2"
+                style="width:50%; border-bottom: 1px solid gray;"></div>
+            {% else %}
+            <br>
+            {% endif %}
         </div>
-        <br>
+
     {% endfor %}
 
     {% if user_profile %}

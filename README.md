@@ -5,6 +5,8 @@
   - [x] When you aren't logged in and you click on a profile, it shows that you are logged in as them
   - [x] Seemingly random reordering of games after locking picks
   ### Features
+  - [x] SSL
+  - [x] Add feedback when logged in
   - [ ] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
   - [ ] Add feedback (message, push, etc.) when locking picks

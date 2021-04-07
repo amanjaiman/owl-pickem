@@ -33,13 +33,28 @@ def index(request):
     else:
         user_profile = None
         user_predictions = None
+        
+
+    if 'User-Agent' in request.headers:
+        if "iPhone" in request.headers['User-Agent'] or "Android" in request.headers['User-Agent']:
+            agent = "mobile"
+        else:
+            agent = "web"
+    else:
+        agent = None
+
+    login_message = request.session.get('login_message')
+    if login_message:
+        request.session['login_message'] = False
 
     context = {
         'current_week' : current_week,
         'current_week_games': current_week_games,
         'user_profile': user_profile,
         'user_predictions': user_predictions,
-        'week_start': week_start
+        'week_start': week_start,
+        'login_message': login_message,
+        'agent': agent
     }
     return render(request, 'pickem/index.html', context)
 
@@ -116,8 +131,11 @@ def pastweeks(request):
 
 
 def signup(request):
-    request.session['current_page'] = 'signup'
-    return render(request, 'pickem/signup.html', {})
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pickem:index', args=()))
+    else:
+        request.session['current_page'] = 'signup'
+        return render(request, 'pickem/signup.html', {})
 
 def signupaction(request):
     try:
@@ -140,8 +158,11 @@ def signupaction(request):
             return loginaction(request)
 
 def loginview(request):
-    request.session['current_page'] = 'login'
-    return render(request, 'pickem/login.html', {})
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pickem:index', args=()))
+    else:
+        request.session['current_page'] = 'login'
+        return render(request, 'pickem/login.html', {})
 
 def loginaction(request):
     try:
@@ -156,6 +177,7 @@ def loginaction(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            request.session['login_message'] = True
             return HttpResponseRedirect(reverse('pickem:index', args=()))
         else:
             return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})

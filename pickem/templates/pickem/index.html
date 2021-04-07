@@ -2,7 +2,16 @@
 
 {% block content %}
 <div class="container-fluid positive-relative" id="main-content">
+    {% if login_message %}
+    <div class="container-fluid alert alert-info alert-dismissible fade show" style="{% if agent and agent == 'web' %}width:60%;{% endif %}" role="alert">
+        <strong>Logged in!</strong> Remember to make your picks before the games start!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <br>
+    {% endif %}
+    
     <h1 class="text-center mb-3">Week {{ current_week }}</h1><br>
+    
     <div class="container">
     {% if request.session.form_message %}<p class="text-center mb-3"><strong>{{ request.session.form_message }}</strong></p>{% endif %}
 
