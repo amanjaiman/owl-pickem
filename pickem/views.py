@@ -14,7 +14,7 @@ import json
 import os
 from datetime import datetime
 
-current_week = 1
+current_week = settings.CURRENT_WEEK
 week_start = False
 
 def error_404_view(request, exception):
