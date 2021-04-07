@@ -9,9 +9,6 @@
     </div>
     <br>
     {% endif %}
-    
-    <h1 class="text-center mb-3">Week {{ current_week }}</h1><br>
-
     {% if prediction_message %}
     <div class="container-fluid alert alert-info alert-dismissible fade show"
         style="{% if agent and agent == 'web' %}width:80%;max-width: 750px;{% endif %}" role="alert">
@@ -20,6 +17,8 @@
     </div>
     <br>
     {% endif %}
+    
+    <h1 class="text-center mb-3">Week {{ current_week }}</h1><br>
     
     <div class="container">
     {% if request.session.form_message %}<p class="text-center mb-3"><strong>{{ request.session.form_message }}</strong></p>{% endif %}

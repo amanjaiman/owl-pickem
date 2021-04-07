@@ -16,7 +16,59 @@
     {% endif %}
     <br>
 
-    {% for prediction in user_predictions %}
+    {% for day, predictions in user_predictions %}
+    <div>
+        <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
+            <h4>{{ day }}</h4>
+        </div>
+        {% for prediction in predictions %}
+        <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
+            {% for team in prediction.game.teams.all %}
+            <div class="col-md-3 btn-group btn-group-toggle">
+                {% if team == prediction.predicted_team %}
+                <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}"
+                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}"
+                    autocomplete="off" checked {% if week_start %}disabled{% endif %}>
+                {% else %}
+                <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}"
+                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}"
+                    autocomplete="off" {% if week_start %}disabled{% endif %}>
+                {% endif %}
+    
+                <label
+                    class="btn {% if prediction.game.has_occurred and team.team_name == prediction.game.winning_team.team_name %} btn-outline-success {% else %} {% if prediction.game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}"
+                    for="{{ prediction.game.game_id }}-{{ team.team_name }}">
+                    {% if forloop.counter == 1 %}
+                    <span>
+                        <p>{{ team.team_name }} <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">
+                        </p>
+                    </span>
+                    {% else %}
+                    <span>
+                        <p><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40"> {{ team.team_name }}
+                        </p>
+                    </span>
+                    {% endif %}
+                </label>
+            </div>
+            {% if forloop.counter == 1 %}
+            <div class="col-md-1">
+                <p>vs.</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% if agent and agent == "mobile" %}
+        <div class="d-flex flex-wrap align-items-center justify-content-center py-2"
+            style="width:50%; border-bottom: 1px solid gray;"></div>
+        {% else %}
+        <br>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <!--{% for prediction in user_predictions %}
         <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
             {% for team in prediction.game.teams.all %}
             <div class="col-md-3 btn-group btn-group-toggle">
@@ -53,7 +105,7 @@
             {% endif %}
         </div>
 
-    {% endfor %}
+    {% endfor %}-->
 
     {% if user_profile %}
     <div class="row-md-3 text-center justify-content-center ">

@@ -7,13 +7,12 @@
   ### Features
   - [x] SSL
   - [x] Add feedback when logged in
-  - [x] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
+  - [ ] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
   - [x] Add feedback (message, push, etc.) when locking picks
   - [ ] Center button text
-  - [ ] Option to not predict a game (unselect an option)
 
-  - [ ] Add headers for days for the games
+  - [x] Add headers for days for the games
   - [ ] Add more fields to leaderboard (twitter handle, total percentage, games predicted)
   - [ ] Change color for incorrect predictions (currently black, try some shade of red)
   - [ ] Add color of badge based on rank if in top 3
@@ -21,5 +20,8 @@
   - [ ] Pagination for leaderboard
   - [x] Make it possible to enter username or email for logging in
 
-  - [ ] Custom 404 page
+  - [x] Custom 404 page
   - [ ] Add admin feature to change week from app
+
+  ### Probably Not
+  - [ ] Option to not predict a game (unselect an option)

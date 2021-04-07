@@ -17,12 +17,27 @@ from datetime import datetime
 current_week = 1
 week_start = False
 
+def error_404_view(request, exception):
+    context = {
+
+    }
+    return render(request,'pickem/404.html', context)
+
 def index(request):
     current_week_games = Game.objects.filter(week=current_week).order_by('game_number')
 
+    games_dict = {}
     game_ids = []
+
+    curr_date = ""
     for game in current_week_games:
         game_ids.append(game.game_id)
+        game_date = game.date_time.strftime("%A %B %d")
+        if game_date != curr_date:
+            curr_date = game_date
+            games_dict[curr_date] = []
+        games_dict[curr_date].append(game)
+    games_dict = sorted(games_dict.items())
     
     request.session['games'] = json.dumps(game_ids)
     request.session['week'] = current_week
@@ -32,10 +47,19 @@ def index(request):
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
         user_predictions = user_profile.prediction_set.filter(game__week=current_week).order_by('game__game_number')
+
+        user_preds_dict = {}
+        curr_date = ""
+        for prediction in user_predictions:
+            game_date = prediction.game.date_time.strftime("%A %B %d")
+            if game_date != curr_date:
+                curr_date = game_date
+                user_preds_dict[curr_date] = []
+            user_preds_dict[curr_date].append(prediction)
+        user_preds_dict = sorted(user_preds_dict.items())
     else:
         user_profile = None
-        user_predictions = None
-        
+        user_preds_dict = None
 
     if 'User-Agent' in request.headers:
         if "iPhone" in request.headers['User-Agent'] or "Android" in request.headers['User-Agent']:
@@ -55,9 +79,9 @@ def index(request):
 
     context = {
         'current_week' : current_week,
-        'current_week_games': current_week_games,
+        'current_week_games': games_dict,
         'user_profile': user_profile,
-        'user_predictions': user_predictions,
+        'user_predictions': user_preds_dict,
         'week_start': week_start,
         'login_message': login_message,
         'prediction_message': prediction_message,
