@@ -19,7 +19,7 @@ import os
 import environ
 environ.Env.read_env()
 
-CURRENT_WEEK = os.environ['current_week']
+CURRENT_WEEK = int(os.environ['current_week'])
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
