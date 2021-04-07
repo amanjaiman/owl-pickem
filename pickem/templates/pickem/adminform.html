@@ -20,9 +20,9 @@
             <h4>{{ day }}</h4>
         </div>
         {% for game in games %}
-        <div class="row d-flex flex-wrap align-items-center justify-content-center py-2">
+        <div class="row d-flex flex-nowrap align-items-center justify-content-center py-2">
             {% for team in game.teams.all %}
-            <div class="col-md-3 btn-group btn-group-toggle">
+            <div class="btn-group btn-group-toggle align-items-center justify-content-center" style="width:27.5%;">
                 {% if game.has_occurred %}
                 <input type="radio" class="btn-check" name="{{ game.game_id }}"
                     value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}"
@@ -37,31 +37,21 @@
                     class="btn {% if game.has_occurred and team.team_name == game.winning_team.team_name %} btn-outline-success {% else %} {% if game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}"
                     for="{{ game.game_id }}-{{ team.team_name }}">
                     {% if forloop.counter == 1 %}
-                    <span>
-                        <p>{{ team.team_name }} <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">
-                        </p>
-                    </span>
+                    <span>{% if agent and agent == "web" %}{{ team.team_name }} {% endif %}<img src="{{ team.team_logo }}"
+                    alt="{{ team.team_name }}" height="40"></span>
                     {% else %}
-                    <span>
-                        <p><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40"> {{ team.team_name }}
-                        </p>
-                    </span>
+                    <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="40">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
                     {% endif %}
                 </label>
             </div>
             {% if forloop.counter == 1 %}
-            <div class="col-md-1">
+            <div style="width:10%">
                 <p>vs.</p>
             </div>
             {% endif %}
             {% endfor %}
         </div>
-        {% if agent and agent == "mobile" %}
-        <div class="d-flex flex-wrap align-items-center justify-content-center py-2"
-            style="width:50%; border-bottom: 1px solid gray;"></div>
-        {% else %}
         <br>
-        {% endif %}
         {% endfor %}
     </div>
     {% endfor %}

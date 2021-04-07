@@ -7,10 +7,10 @@
   ### Features
   - [x] SSL
   - [x] Add feedback when logged in
-  - [ ] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
+  - [x] Make games clearly separated when on mobile (maybe if on mobile remove team names?)
   - [ ] Add a confirm password field (or option to see your password)
   - [x] Add feedback (message, push, etc.) when locking picks
-  - [ ] Center button text
+  - [x] Center button text
 
   - [x] Add headers for days for the games
   - [ ] Add more fields to leaderboard (twitter handle, total percentage, games predicted)
