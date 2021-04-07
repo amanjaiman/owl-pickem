@@ -23,7 +23,7 @@
             {% if game.has_occurred %}
             <input type="radio" class="btn-check" name="{{ game.game_id }}" value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off" disabled>
             {% else %}
-            <input type="radio" class="btn-check" name="{{ game.game_id }}" value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off">
+            <input type="radio" class="btn-check" name="{{ game.game_id }}" value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off" {% if not user_profile %}disabled{% endif %}>
             {% endif %}
 
             <label class="btn {% if game.has_occurred and team.team_name == game.winning_team.team_name %} btn-outline-success {% else %} {% if game.has_occurred %} btn-outline-danger {% else %} btn-outline-dark {% endif %} {% endif %}" for="{{ game.game_id }}-{{ team.team_name }}">
