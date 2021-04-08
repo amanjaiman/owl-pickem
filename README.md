@@ -12,6 +12,7 @@
   - [ ] Display percentage in past weeks too
   - [ ] Pagination for leaderboard
   - [ ] Add rank to user profile and page (this has to be on action of updating users at once)
+  - [ ] Add rankings to leaderboard page
   - [ ] Make everything as orange as possible
 
   ### Finished
@@ -29,7 +30,6 @@
   - [x] Custom 404 page
   - [x] Add week_start to heroku
   - [x] Center text in past weeks buttons
-  - [x] Add rankings to leaderboard page
   - [x] Make user profile week navigation the same as past weeks, but keep the table view
   - [x] Test: "points" to "Points"
 
