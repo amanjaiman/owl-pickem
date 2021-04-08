@@ -16,6 +16,8 @@ from datetime import datetime
 
 current_week = settings.CURRENT_WEEK
 week_start = False
+if settings.WEEK_START == 1:
+    week_start = True
 
 def error_404_view(request, exception):
     context = {
@@ -93,16 +95,26 @@ def leaderboard(request):
     request.session['current_page'] = 'leaderboard'
     
     users = UserProfile.objects.all().order_by('-points')
+    users = users.exclude(user__username='admin')
 
     if request.user.is_authenticated:
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
     else:
         user_profile = None
+
+    if 'User-Agent' in request.headers:
+        if "iPhone" in request.headers['User-Agent'] or "Android" in request.headers['User-Agent']:
+            agent = "mobile"
+        else:
+            agent = "web"
+    else:
+        agent = None
     
     context = {
         'users': users,
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'agent': agent,
     }
 
     return render(request, 'pickem/leaderboard.html', context)
@@ -151,11 +163,20 @@ def pastweeks(request):
         user_profile = UserProfile.objects.get(user=user)
     else:
         user_profile = None
+    
+    if 'User-Agent' in request.headers:
+        if "iPhone" in request.headers['User-Agent'] or "Android" in request.headers['User-Agent']:
+            agent = "mobile"
+        else:
+            agent = "web"
+    else:
+        agent = None
 
     context = {
         'week_list': week_list,
         'last_week': current_week-1,
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'agent': agent,
     }
 
     return render(request, 'pickem/pastweeks.html', context)

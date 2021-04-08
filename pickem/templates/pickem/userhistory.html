@@ -2,15 +2,55 @@
 
 {% block content %}
 <div class="container-fluid" id="main-content">
-{% if profile %}
+    {% if profile %}
     <div>
         <h1 class="text-center mb-3">{{ profile.user.username }}</h1>
-        <h3 class="text-center mb-3"><span class="badge bg-primary rounded-pill">points: {{ profile.points }}</span></h3>
+        <h3 class="text-center mb-3"><span class="badge bg-warning rounded-pill">Points: {{ profile.points }}</span></h3>
     </div>
     <br>
-    {% if user_predictions %}
     <div class="container">
-        <div class="accordion" id="accordionHistory">
+        {% if user_predictions %}
+        <ul class="nav nav-pills mb-3 text-center justify-content-center" id="pills-tab" role="tablist">
+            {% for week in user_predictions %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if profile.latest_pred_week == forloop.counter %}active{% endif %}"
+                    id="pills-{{ forloop.counter }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ forloop.counter }}"
+                    type="button" role="tab" aria-controls="pills-{{ forloop.counter }}" aria-selected="true">{{ forloop.counter }}</button>
+            </li>
+            {% endfor %}
+        </ul>
+        <br>
+        <div class="tab-content" id="pills-tabContent">
+            {% for week in user_predictions %}
+            <div class="tab-pane {% if profile.latest_pred_week == forloop.counter %}show active{% endif %}" id="pills-{{ forloop.counter }}"
+                role="tabpanel" aria-labelledby="pills-{{ forloop.counter }}-tab">
+                    {% for prediction in week %}
+                    {% if prediction.predicted_team %}
+                    <div class="row text-center justify-content-center">
+                        <ul class="list-group list-group-horizontal">
+                            {% for team in prediction.game.teams.all %}
+                            <li class="list-group-item {% if prediction.game.has_occurred %} {% if team == prediction.predicted_team %} {% if prediction.correct %} list-group-item-success {% else %} list-group-item-danger {% endif %} {% endif %} {% else %} {% if team == prediction.predicted_team %}list-group-item-primary {% endif %} {% endif %}"
+                                style="width:50%;">
+                                <span>
+                                    <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="30">
+                                    <p>{{ team.team_name }}</p>
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center mb-3">It's finally season time! Check back as the season progresses.</p>
+        {% endif %}
+
+
+        
+        <!--<div class="accordion" id="accordionHistory">
             {% for week in user_predictions %}
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading{{ forloop.counter }}">
@@ -42,7 +82,7 @@
                 </div>
             </div>
             {% endfor %}
-        </div>
+        </div>-->
     </div>
     {% else %}
     <div class="row-md-3 text-center justify-content-center ">
@@ -50,6 +90,5 @@
     </div>
     {% endif %}
     
-{% endif %}
 </div>
 {% endblock %}

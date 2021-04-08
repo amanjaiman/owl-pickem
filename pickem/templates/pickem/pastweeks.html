@@ -18,27 +18,22 @@
             {% for week in week_list %}
                 <div class="tab-pane {% if last_week == forloop.counter %}show active{% endif %}" id="pills-{{ forloop.counter }}" role="tabpanel" aria-labelledby="pills-{{ forloop.counter }}-tab">
                     {% for game in week %}
-                        <div class="row text-center justify-content-center">
+                        <div class="row d-flex flex-nowrap align-items-center justify-content-center py-2">
                             {% for team in game.teams.all %}
-                                <div class="col-md-3 btn-group btn-group-toggle">
+                                <div class="btn-group btn-group-toggle align-items-center justify-content-center" style="width:27.5%;">
                                     <input type="radio" class="btn-check" name="{{ game.game_id }}" value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off" disabled>
                             
                                     <label class="btn {% if team.team_name == game.winning_team.team_name %} btn-outline-success {% else %}btn-outline-danger {% endif %}" for="{{ game.game_id }}-{{ team.team_name }}">
                                         {% if forloop.counter == 1 %}
-                                        <span>
-                                            <p>{{ team.team_name }} <img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="25">
-                                            </p>
-                                        </span>
+                                        <span>{% if agent and agent == "web" %}{{ team.team_name }} {% endif %}<img src="{{ team.team_logo }}"
+                                        alt="{{ team.team_name }}" height="45"></span>
                                         {% else %}
-                                        <span>
-                                            <p><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="25"> {{ team.team_name }}
-                                            </p>
-                                        </span>
+                                        <span><img src="{{ team.team_logo }}" alt="{{ team.team_name }}" height="45">{% if agent and agent == "web" %} {{ team.team_name }}{% endif %}</span>
                                         {% endif %}
                                     </label>
                                 </div>
                                 {% if forloop.counter == 1 %}
-                                    <div class="col-md-1">
+                                    <div style="width:10%;">
                                         <p>vs.</p>
                                     </div>
                                 {% endif %}

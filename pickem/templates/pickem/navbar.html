@@ -15,7 +15,7 @@
 
         {% if user_profile %}
         <div class="col-md-3 text-end">
-            <a href="{% url 'pickem:userhistory' user_profile.user.username %}"><button type="button" class="btn btn-outline-dark me-2">{{ user_profile.user.username }} <span class="badge bg-primary rounded-pill">{{ user_profile.points }}</span></button></a>
+            <a href="{% url 'pickem:userhistory' user_profile.user.username %}"><button type="button" class="btn btn-outline-dark me-2">{{ user_profile.user.username }} <span class="badge bg-warning rounded-pill">{{ user_profile.points }}</span></button></a>
             <a href="{% url 'pickem:logoutaction' %}"><button type="button" class="btn btn-warning">Logout</button></a>
         </div>
         {% else %}
