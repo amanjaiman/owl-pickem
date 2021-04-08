@@ -4,6 +4,7 @@
   ### Bugs
   
   ### Features
+  - [ ] "Email reminders" checkbox when signing up
   - [ ] Add a confirm password field (or option to see your password)
   - [ ] Fade alerts
   - [ ] Add more fields to leaderboard (twitter handle, etc.)

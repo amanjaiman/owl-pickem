@@ -304,6 +304,8 @@ def adminaction(request):
 
             give_points(game)
         
+        update_ranks()
+        
     return HttpResponseRedirect(reverse('pickem:index', args=()))
 
 def give_points(game):
@@ -314,6 +316,21 @@ def give_points(game):
                 game_pred.correct = True
                 user.points += 1
             game_pred.save()
+        user.save()
+
+def update_ranks():
+    users = UserProfile.objects.all().order_by('-points')
+    users = users.exclude(user__username='admin')
+
+    curr_points = users[0].points + 1
+    curr_rank = 0
+    for user in users:
+        if user.points < curr_points:
+            curr_points = user.points
+            curr_rank += 1
+        else:
+            assert(user.points == curr_points)
+        user.rank = curr_rank
         user.save()
 
 

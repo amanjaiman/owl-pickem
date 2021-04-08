@@ -37,6 +37,7 @@ class Game(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+    rank = models.IntegerField(default=0)
     latest_pred_week = models.IntegerField(default=0)
 
     def __str__(self):

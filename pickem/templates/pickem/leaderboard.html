@@ -1,18 +1,42 @@
 {% extends "pickem/base.html" %}
 
 {% block content %}
-<div class="container-fluid position-relative" id="main-content" style="{% if agent and agent == 'mobile' %}width:80%;{% else %}width:65%;{% endif %}">
+<div class="container-fluid position-relative" id="main-content" style="{% if agent and agent == 'mobile' %}width:80%;{% else %}width:55%;{% endif %}">
     <h1 class="text-center mb-3">Leaderboard</h1><br>
-    <div class="container col">
-        {% if users %}
+    <div class="container">
+        <!--{% if users %}
             <ul class="list-group">
                 {% for curr_user_profile in users %}
                     <a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="list-group-item {% if curr_user_profile == user_profile %} list-group-item-info {% endif %} d-flex justify-content-between align-items-center">
-                        {{ curr_user_profile.user.username }}
+                        {{ curr_user_profile.rank }} {{ curr_user_profile.user.username }}
                         <span class="badge bg-warning rounded-pill">{{ curr_user_profile.points }}</span>
                     </a>
                 {% endfor %}
             </ul>
+        {% else %}
+            <p>Internal Error!</p>
+        {% endif %}-->
+        {% if users %}
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Twitter</th>
+                    <th scope="col">Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curr_user_profile in users %}
+                    <tr class="{% if curr_user_profile == user_profile %}table-info{% endif %}">
+                        <th scope="row"><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.rank }}</a></th>
+                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.user.username }}</a></td>
+                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">@</a></td> <!--Make link-->
+                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark"><span class="badge bg-warning rounded-pill">{{ curr_user_profile.points }}</span></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% else %}
             <p>Internal Error!</p>
         {% endif %}
