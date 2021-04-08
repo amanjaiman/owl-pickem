@@ -41,6 +41,19 @@
                     <label for="floatingPassword">Password</label>
                 </div>
                 <br>
+                <div class="form floating input-group mb-3">
+                    <span class="input-group-text" id="twitter">@</span>
+                    <input type="text" class="form-control" id="floatingInput" name="twitter" placeholder="Twitter Handle" aria-label="Username" aria-describedby="twitter">
+                </div>
+                <div>
+                    <select class="form-select" name="team" aria-label="favorite team">
+                        <option selected>No Favorite Team</option>
+                        {% for team in teams %}
+                        <option value="{{ team.team_name }}">{{ team.team_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
                 <button class="w-100 btn btn-lg btn-warning" type="submit" value="signupaction">Submit</button>
             </form>
     </div>

@@ -187,27 +187,37 @@ def signup(request):
         return HttpResponseRedirect(reverse('pickem:index', args=()))
     else:
         request.session['current_page'] = 'signup'
-        return render(request, 'pickem/signup.html', {})
+
+        context = {
+            'teams': Team.objects.all().order_by('team_name')
+        }
+        return render(request, 'pickem/signup.html', context)
 
 def signupaction(request):
     try:
+        print(request.POST)
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
         #confirm_password = request.POST['confirm_password']
+        twitter = request.POST['twitter']
+        team_name = request.POST['team']
+        if team_name == "No Favorite Team":
+            team = None
+        else:
+            team = Team.objects.get(team_name=team_name)
     except KeyError:
         return render(request, 'pickem/signup.html', {'error_message': "Not all required fields were provided."})
     else:
         if User.objects.filter(username=username).exists():
-            return render(request, 'pickem/signup.html', {'error_message': "That username already exists!"})
+            return render(request, 'pickem/signup.html', {'error_message': "That username already exists!", 'teams': Team.objects.all().order_by('team_name')})
         if User.objects.filter(email=email).exists():
-            return render(request, 'pickem/signup.html', {'error_message': "That email already exists!"})
+            return render(request, 'pickem/signup.html', {'error_message': "That email already exists!", 'teams': Team.objects.all().order_by('team_name')})
         if not username.isalnum():
-            return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!"})
+            return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!", 'teams': Team.objects.all().order_by('team_name')})
         else:
-
             user = User.objects.create_user(username=username, password=password, email=email)
-            new_user = UserProfile(user=user)
+            new_user = UserProfile(user=user, twitter=twitter, favorite_team=team)
             new_user.save()
             return loginaction(request)
 

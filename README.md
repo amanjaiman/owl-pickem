@@ -7,14 +7,10 @@
   - [ ] "Email reminders" checkbox when signing up
   - [ ] Add a confirm password field (or option to see your password)
   - [ ] Fade alerts
-  - [ ] Add more fields to leaderboard (twitter handle, etc.)
   - [ ] Add trophy on leaderboard/user profile if in top 3
   - [ ] When games are locked, display percentage of each team picked
   - [ ] Display percentage in past weeks too
   - [ ] Pagination for leaderboard
-  - [ ] Add rank to user profile and page (this has to be on action of updating users at once)
-  - [ ] Add rankings to leaderboard page
-  - [ ] Make everything as orange as possible
 
   ### Finished
   - [x] Bug: When you aren't logged in and you click on a profile, it shows that you are logged in as them
@@ -33,6 +29,10 @@
   - [x] Center text in past weeks buttons
   - [x] Make user profile week navigation the same as past weeks, but keep the table view
   - [x] Test: "points" to "Points"
+  - [x] Add rank to user profile and page (this has to be on action of updating users at once)
+  - [x] Add rankings to leaderboard page
+  - [x] Make everything as orange as possible
+  - [x] Add more fields to leaderboard (twitter handle, etc.)
 
 
   ### Probably Not

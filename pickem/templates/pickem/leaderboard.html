@@ -24,6 +24,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">Twitter</th>
                     <th scope="col">Points</th>
+                    <th scope="col">Favorite Team</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +32,9 @@
                     <tr class="{% if curr_user_profile == user_profile %}table-info{% endif %}">
                         <th scope="row"><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.rank }}</a></th>
                         <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.user.username }}</a></td>
-                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">@</a></td> <!--Make link-->
+                        <td>{% if curr_user_profile.twitter %}<a href="https://www.twitter.com/{{ curr_user_profile.twitter }}" class="nav-link link-dark">{{ curr_user_profile.twitter }}</a>{% endif %}</td>
                         <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark"><span class="badge bg-warning rounded-pill">{{ curr_user_profile.points }}</span></a></td>
+                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}"><img src="{{ curr_user_profile.favorite_team.team_logo }}" alt="{{ curr_user_profile.favorite_team.team_name }}" height="40"></a></td>
                     </tr>
                 {% endfor %}
             </tbody>
