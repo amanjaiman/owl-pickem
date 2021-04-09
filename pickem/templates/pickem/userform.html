@@ -27,12 +27,10 @@
             <div class="btn-group btn-group-toggle align-items-center justify-content-center" style="width:27.5%;">
                 {% if team == prediction.predicted_team %}
                 <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}"
-                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}"
-                    autocomplete="off" checked {% if week_start %}disabled{% endif %}>
+                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}" autocomplete="off" checked {% if week_start %}disabled{% endif %}>
                 {% else %}
                 <input type="radio" class="btn-check" name="{{ prediction.game.game_id }}"
-                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}"
-                    autocomplete="off" {% if week_start %}disabled{% endif %}>
+                    value="{{ prediction.game.game_id }}-{{ team.team_name }}" id="{{ prediction.game.game_id }}-{{ team.team_name }}" autocomplete="off" {% if week_start %}disabled{% endif %}>
                 {% endif %}
     
                 <label

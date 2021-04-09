@@ -195,7 +195,6 @@ def signup(request):
 
 def signupaction(request):
     try:
-        print(request.POST)
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
@@ -240,16 +239,20 @@ def loginaction(request):
                 try:
                     validate_email(username)
                 except ValidationError:
-                    return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!"})
+                    return render(request, 'pickem/login.html', {'error_message': "Username cannot contain special characters!"})
                 else:
-                    u = User.objects.get(email=username)
-                    user = authenticate(request, username=u.username, password=password)
-                    if user is not None:
-                        login(request, user)
-                        request.session['login_message'] = True
-                        return HttpResponseRedirect(reverse('pickem:index', args=()))
+                    users = User.objects.filter(email=username)
+                    if len(users) > 0:
+                        u = users[0]
+                        user = authenticate(request, username=u.username, password=password)
+                        if user is not None:
+                            login(request, user)
+                            request.session['login_message'] = True
+                            return HttpResponseRedirect(reverse('pickem:index', args=()))
+                        else:
+                            return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})
                     else:
-                        return render(request, 'pickem/login.html', {'error_message': "That user does not exist!"})
+                        return render(request, 'pickem/login.html', {'error_message': "That email has not been registered!"})
         else:
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -298,21 +301,24 @@ def adminaction(request):
         game_ids = json.loads(request.session.get('games'))
 
         for game_id in game_ids:
-            game = Game.objects.get(game_id=game_id)
-            game.has_occurred = True
-            team_name = request.POST[game_id].split("-")[1]
-            game.winning_team = Team.objects.get(team_name=team_name)
+            try:
+                team_name = request.POST[game_id].split("-")[1]
+                game = Game.objects.get(game_id=game_id)
+                game.has_occurred = True
+                game.winning_team = Team.objects.get(team_name=team_name)
 
-            winning_team = game.teams.get(team_name=game.winning_team.team_name)
-            losing_team = game.teams.get(~Q(team_name=game.winning_team.team_name))
-            winning_team.team_wins += 1
-            losing_team.team_losses += 1
+                winning_team = game.teams.get(team_name=game.winning_team.team_name)
+                losing_team = game.teams.get(~Q(team_name=game.winning_team.team_name))
+                winning_team.team_wins += 1
+                losing_team.team_losses += 1
 
-            winning_team.save()
-            losing_team.save()
-            game.save()
+                winning_team.save()
+                losing_team.save()
+                game.save()
 
-            give_points(game)
+                give_points(game)
+            except KeyError:
+                continue
         
         update_ranks()
         

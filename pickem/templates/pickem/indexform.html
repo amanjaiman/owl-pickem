@@ -25,14 +25,12 @@
         <div class="row d-flex flex-nowrap align-items-center justify-content-center py-2">
             {% for team in game.teams.all %}
                 <div class="btn-group btn-group-toggle align-items-center justify-content-center" style="width:27.5%;">
-                    {% if game.has_occurred %}
+                    {% if week_start %}
                     <input type="radio" class="btn-check" name="{{ game.game_id }}"
-                    value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}"
-                    autocomplete="off" disabled>
+                    value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off" disabled>
                     {% else %}
                     <input type="radio" class="btn-check" name="{{ game.game_id }}"
-                    value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}"
-                    autocomplete="off" {% if not user_profile %}disabled{% endif %}>
+                    value="{{ game.game_id }}-{{ team.team_name }}" id="{{ game.game_id }}-{{ team.team_name }}" autocomplete="off" {% if not user_profile %}disabled{% endif %}>
                     {% endif %}
                 
                     <label
