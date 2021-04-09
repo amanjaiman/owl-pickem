@@ -41,6 +41,7 @@ class UserProfile(models.Model):
     latest_pred_week = models.IntegerField(default=0)
     twitter = models.CharField(max_length=50, blank=True, null=True)
     favorite_team = models.ForeignKey(Team, blank=True, null=True, on_delete=models.CASCADE)
+    email_updates = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

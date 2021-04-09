@@ -195,18 +195,23 @@ def signup(request):
 
 def signupaction(request):
     try:
+        print(request.POST)
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
-        #confirm_password = request.POST['confirm_password']
+        confirm_password = request.POST['confirmpassword']
         twitter = request.POST['twitter']
         team_name = request.POST['team']
         if team_name == "No Favorite Team":
             team = None
         else:
             team = Team.objects.get(team_name=team_name)
+        if "emailupdates" in request.POST:
+            email_updates = True
+        else:
+            email_updates = False
     except KeyError:
-        return render(request, 'pickem/signup.html', {'error_message': "Not all required fields were provided."})
+        return render(request, 'pickem/signup.html', {'error_message': "Not all required fields were provided.", 'teams': Team.objects.all().order_by('team_name')})
     else:
         if User.objects.filter(username=username).exists():
             return render(request, 'pickem/signup.html', {'error_message': "That username already exists!", 'teams': Team.objects.all().order_by('team_name')})
@@ -214,9 +219,11 @@ def signupaction(request):
             return render(request, 'pickem/signup.html', {'error_message': "That email already exists!", 'teams': Team.objects.all().order_by('team_name')})
         if not username.isalnum():
             return render(request, 'pickem/signup.html', {'error_message': "Username cannot contain special characters!", 'teams': Team.objects.all().order_by('team_name')})
+        if password != confirm_password:
+            return render(request, 'pickem/signup.html', {'error_message': "Passwords do not match!", 'teams': Team.objects.all().order_by('team_name')})
         else:
             user = User.objects.create_user(username=username, password=password, email=email)
-            new_user = UserProfile(user=user, twitter=twitter, favorite_team=team)
+            new_user = UserProfile(user=user, twitter=twitter, favorite_team=team, email_updates=email_updates)
             new_user.save()
             return loginaction(request)
 

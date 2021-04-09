@@ -6,7 +6,6 @@
   ### Features
   - [ ] Update profile page
   - [ ] "Email reminders" checkbox when signing up
-  - [ ] Add a confirm password field (or option to see your password)
 
   - [ ] Pagination for leaderboard
   - [ ] When games are locked, display percentage of each team picked
@@ -36,6 +35,7 @@
   - [x] Make everything as orange as possible
   - [x] Add more fields to leaderboard (twitter handle, etc.)
   - [x] Fix leaderboard table on mobile!
+  - [x] Add a confirm password field (or option to see your password)
 
 
   ### Probably Not
