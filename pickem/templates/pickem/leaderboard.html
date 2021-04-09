@@ -1,7 +1,7 @@
 {% extends "pickem/base.html" %}
 
 {% block content %}
-<div class="container-fluid position-relative" id="main-content" style="{% if agent and agent == 'mobile' %}width:80%;{% else %}width:55%;{% endif %}">
+<div class="container-fluid position-relative" id="main-content">
     <h1 class="text-center mb-3">Leaderboard</h1><br>
     <div class="container">
         <!--{% if users %}
@@ -17,28 +17,30 @@
             <p>Internal Error!</p>
         {% endif %}-->
         {% if users %}
+        <div class="d-flex flex-wrap align-items-center justify-content-center py-2">
         <table class="table">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">Rank</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Twitter</th>
+                    {% if agent and agent == 'web' %}<th scope="col">Twitter</th>{% endif %}
                     <th scope="col">Points</th>
                     <th scope="col">Favorite Team</th>
                 </tr>
             </thead>
             <tbody>
                 {% for curr_user_profile in users %}
-                    <tr class="{% if curr_user_profile == user_profile %}table-info{% endif %}">
-                        <th scope="row"><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.rank }}</a></th>
-                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.user.username }}</a></td>
-                        <td>{% if curr_user_profile.twitter %}<a href="https://www.twitter.com/{{ curr_user_profile.twitter }}" class="nav-link link-dark">{{ curr_user_profile.twitter }}</a>{% endif %}</td>
-                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark"><span class="badge bg-warning rounded-pill">{{ curr_user_profile.points }}</span></a></td>
-                        <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}"><img src="{{ curr_user_profile.favorite_team.team_logo }}" alt="{{ curr_user_profile.favorite_team.team_name }}" height="40"></a></td>
-                    </tr>
+                <tr class="{% if curr_user_profile == user_profile %}table-info{% endif %}">
+                    <th scope="row"><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.rank }}</a></th>
+                    <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-dark">{{ curr_user_profile.user.username }}</a></td>
+                    {% if agent and agent == 'web' %}<td>{% if curr_user_profile.twitter %}<a href="https://www.twitter.com/{{ curr_user_profile.twitter }}" class="nav-link link-dark">@{{ curr_user_profile.twitter }}</a>{% endif %}</td>{% endif %}
+                    <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}" class="nav-link link-primary"><span class="badge bg-warning rounded-pill">{{ curr_user_profile.points }}</a></span></a></td>
+                    <td><a href="{% url 'pickem:userhistory' curr_user_profile.user.username %}"><img src="{{ curr_user_profile.favorite_team.team_logo }}" alt="{{ curr_user_profile.favorite_team.team_name }}" height="40"></a></td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
+        </div>
         {% else %}
             <p>Internal Error!</p>
         {% endif %}

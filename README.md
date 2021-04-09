@@ -4,13 +4,15 @@
   ### Bugs
   
   ### Features
+  - [ ] Update profile page
   - [ ] "Email reminders" checkbox when signing up
   - [ ] Add a confirm password field (or option to see your password)
-  - [ ] Fade alerts
-  - [ ] Add trophy on leaderboard/user profile if in top 3
+
+  - [ ] Pagination for leaderboard
   - [ ] When games are locked, display percentage of each team picked
   - [ ] Display percentage in past weeks too
-  - [ ] Pagination for leaderboard
+  - [ ] Fade alerts
+  - [ ] Add trophy (OR OW RANK) on leaderboard/user profile if in top 3
 
   ### Finished
   - [x] Bug: When you aren't logged in and you click on a profile, it shows that you are logged in as them
@@ -33,6 +35,7 @@
   - [x] Add rankings to leaderboard page
   - [x] Make everything as orange as possible
   - [x] Add more fields to leaderboard (twitter handle, etc.)
+  - [x] Fix leaderboard table on mobile!
 
 
   ### Probably Not
